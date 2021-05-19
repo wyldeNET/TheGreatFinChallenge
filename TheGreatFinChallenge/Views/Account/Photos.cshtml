@@ -1,0 +1,87 @@
+﻿@model PhotosData;
+@{
+    ViewData["Title"] = "Photos";
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+
+    var routeUrl = Url.RouteUrl(ViewContext.RouteData.Values);
+    var qsPath = ViewContext.HttpContext.Request.QueryString.Value;
+    var url = $"{routeUrl}{qsPath}";
+
+}
+
+@section Styles{
+    <link href="~/css/photo.css" rel="stylesheet" type="text/css" />
+}
+
+@section Scripts{
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    
+}
+
+<div class="container-fluid">
+        <form action="~/Photos" method="post" id="photoForm" enctype="multipart/form-data">
+            <hr />
+            <div class="form-group">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <input class="form-control" type="file" id="myFile" name="file" />
+                    </div>
+                    <div class="col-auto">
+                        <input type="submit" value="Upload" class="btn btn-primary" />
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10 text-success">
+                    @ViewBag.FileStatus
+                </div>
+            </div>
+        </form>
+    <hr />
+    <div class="ownRow">
+        <div class="ownColumn">
+            @foreach (var photo in Model.PhotoList.Take(Model.PhotoList.Count / 2))
+            {
+                if (photo.CreatorID == Model.User.pk_UserID)
+                {
+                    <form class="content_img" id="form-id@(photo.PhotoID)" action="~/DeletePhotos" method="post">
+                        <input type="hidden" name="objId" value=@photo.PhotoID>
+                        <img class="w-100 images" id=@photo.PhotoID src=@photo.PhotoLocation />
+                        <div onclick="javascript:this.parentNode.submit()">@Model.UserList.Find(x => x.pk_UserID == photo.CreatorID).FirstName @Model.UserList.Find(x => x.pk_UserID == photo.CreatorID).LastName</div>
+                    </form>
+                }
+                else
+                {
+                    <div class="content_img">
+                        <img class="w-100 images" id=@photo.PhotoID src=@photo.PhotoLocation />
+                        <div>@Model.UserList.Find(x => x.pk_UserID == photo.CreatorID).FirstName @Model.UserList.Find(x => x.pk_UserID == photo.CreatorID).LastName</div>
+                    </div>
+                }
+            }
+        </div>
+        <div class="ownColumn">
+            @foreach (var photo in Model.PhotoList.Skip(Model.PhotoList.Count / 2))
+            {
+                if (photo.CreatorID == Model.User.pk_UserID)
+                {
+                    <form class="content_img" id="form-id@(photo.PhotoID)" action="~/DeletePhotos" method="post">
+                        <input type="hidden" name="objId" value=@photo.PhotoID>
+                        <img class="w-100 images" id=@photo.PhotoID src=@photo.PhotoLocation />
+                        <div onclick="javascript:this.parentNode.submit()">@Model.UserList.Find(x => x.pk_UserID == photo.CreatorID).FirstName @Model.UserList.Find(x => x.pk_UserID == photo.CreatorID).LastName</div>
+                    </form>
+                }
+                else
+                {
+                    <div class="content_img">
+                        <img class="w-100 images" id=@photo.PhotoID src=@photo.PhotoLocation />
+                        <div>@Model.UserList.Find(x => x.pk_UserID == photo.CreatorID).FirstName @Model.UserList.Find(x => x.pk_UserID == photo.CreatorID).LastName</div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
