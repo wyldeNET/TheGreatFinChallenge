@@ -595,7 +595,7 @@ namespace TheGreatFinChallenge.Controllers
                 List<Users> users = await getAllUsersByIdAsync(_context);
                 foreach (var u in users)
                 {
-                    var line = $"('{u.FirstName}', '{u.LastName}', {u.Admin},'{u.Email}', '{u.PasswordHash}', '{u.Hash}', '{u.CreationDate}')";
+                    var line = $"('{u.FirstName}', '{u.LastName}', {Convert.ToInt32(u.Admin)},'{u.Email}', '{u.PasswordHash}', '{u.Hash}', '{u.CreationDate}')";
                     if (u == users.Last()) line += ";\n\n";
                     else line += ",\n";
                     data += line;
