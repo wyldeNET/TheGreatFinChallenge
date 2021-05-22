@@ -631,7 +631,7 @@ namespace TheGreatFinChallenge.Controllers
                 List<Activities> activities = await getAllActivitiesAsync(_context);
                 foreach (var a in activities)
                 {
-                    var line = $"({a.fk_UserID}, '{a.ActivityType}', {a.TotalCalories}, {a.Distance}, {a.TTime}, {a.StartTime}, '{a.Gear}')";
+                    var line = $"({a.fk_UserID}, '{a.ActivityType}', {a.TotalCalories}, {Convert.ToString(a.Distance).Replace(",", ".")}, {a.TTime}, {a.StartTime}, '{a.Gear}')";
                     if (a == activities.Last()) line += ";";
                     else line += ",\n";
                     data += line;
