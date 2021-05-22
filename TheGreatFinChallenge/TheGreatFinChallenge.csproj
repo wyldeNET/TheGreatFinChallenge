@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="BackupTXT\" />
     <Folder Include="wwwroot\img\uploadedImages\" />
   </ItemGroup>
 

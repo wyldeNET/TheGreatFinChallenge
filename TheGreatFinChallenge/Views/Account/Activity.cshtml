@@ -102,11 +102,11 @@
                                         @foreach (var lst in Model.TableData["Cycling"])
                                         {
                                             <tr style="cursor:pointer;" id="@lst.pk_ActivityID">
-                                                <td scope="row" onclick="setActivityId(this, '@lst.pk_ActivityID');" data-toggle="modal" data-target="#modalEditActivity">@lst.StartTime.ToString("dd/MM/yyyy")</td>
-                                                <td onclick="setActivityId(this, '@lst.pk_ActivityID');" data-toggle="modal" data-target="#modalEditActivity">@lst.TTime</td>
-                                                <td onclick="setActivityId(this, '@lst.pk_ActivityID');" data-toggle="modal" data-target="#modalEditActivity">@Convert.ToString(lst.Distance).Replace(",", ".")</td>
-                                                <td onclick="setActivityId(this, '@lst.pk_ActivityID');" data-toggle="modal" data-target="#modalEditActivity">@lst.TotalCalories</td>
-                                                <td style="cursor:pointer;" onclick="setActivityId(this, '@lst.pk_ActivityID');" data-toggle="modal" data-target="#modalDeleteActivity"><i class="fas fa-trash"></i></td>
+                                                <td scope="row" onclick="setActivityId(this, '@lst.pk_ActivityID', '@lst.ActivityType');" data-toggle="modal" data-target="#modalEditActivity">@lst.StartTime.ToString("dd/MM/yyyy")</td>
+                                                <td onclick="setActivityId(this, '@lst.pk_ActivityID', '@lst.ActivityType');" data-toggle="modal" data-target="#modalEditActivity">@lst.TTime</td>
+                                                <td onclick="setActivityId(this, '@lst.pk_ActivityID', '@lst.ActivityType');" data-toggle="modal" data-target="#modalEditActivity">@Convert.ToString(lst.Distance).Replace(",", ".")</td>
+                                                <td onclick="setActivityId(this, '@lst.pk_ActivityID', '@lst.ActivityType');" data-toggle="modal" data-target="#modalEditActivity">@lst.TotalCalories</td>
+                                                <td style="cursor:pointer;" onclick="setActivityId(this, '@lst.pk_ActivityID', '@lst.ActivityType');" data-toggle="modal" data-target="#modalDeleteActivity"><i class="fas fa-trash"></i></td>
                                             </tr>
                                         }
                                     </tbody>
@@ -139,11 +139,11 @@
                                         @foreach (var lst in Model.TableData["Running"])
                                         {
                                             <tr style="cursor:pointer;" id="@lst.pk_ActivityID">
-                                                <td  scope="row" onclick="setActivityId(this, '@lst.pk_ActivityID');" data-toggle="modal" data-target="#modalEditActivity">@lst.StartTime.ToString("dd/MM/yyyy")</td>
-                                                <td onclick="setActivityId(this, '@lst.pk_ActivityID');" data-toggle="modal" data-target="#modalEditActivity">@lst.TTime</td>
-                                                <td onclick="setActivityId(this, '@lst.pk_ActivityID');" data-toggle="modal" data-target="#modalEditActivity">@Convert.ToString(lst.Distance).Replace(",", ".")</td>
-                                                <td onclick="setActivityId(this, '@lst.pk_ActivityID');" data-toggle="modal" data-target="#modalEditActivity">@lst.TotalCalories</td>
-                                                <td style="cursor:pointer;" onclick="setActivityId(this, '@lst.pk_ActivityID');" data-toggle="modal" data-target="#modalDeleteActivity"><i class="fas fa-trash"></i></td>
+                                                <td  scope="row" onclick="setActivityId(this, '@lst.pk_ActivityID', '@lst.ActivityType');" data-toggle="modal" data-target="#modalEditActivity">@lst.StartTime.ToString("dd/MM/yyyy")</td>
+                                                <td onclick="setActivityId(this, '@lst.pk_ActivityID', '@lst.ActivityType');" data-toggle="modal" data-target="#modalEditActivity">@lst.TTime</td>
+                                                <td onclick="setActivityId(this, '@lst.pk_ActivityID', '@lst.ActivityType');" data-toggle="modal" data-target="#modalEditActivity">@Convert.ToString(lst.Distance).Replace(",", ".")</td>
+                                                <td onclick="setActivityId(this, '@lst.pk_ActivityID', '@lst.ActivityType');" data-toggle="modal" data-target="#modalEditActivity">@lst.TotalCalories</td>
+                                                <td style="cursor:pointer;" onclick="setActivityId(this, '@lst.pk_ActivityID', '@lst.ActivityType');" data-toggle="modal" data-target="#modalDeleteActivity"><i class="fas fa-trash"></i></td>
                                             </tr>
                                         }
                                     </tbody>
@@ -174,11 +174,11 @@
                                         @foreach (var lst in Model.TableData["Hiking"])
                                         {
                                             <tr style="cursor:pointer;" id="@lst.pk_ActivityID">
-                                                <td  scope="row" onclick="setActivityId(this, '@lst.pk_ActivityID');" data-toggle="modal" data-target="#modalEditActivity">@lst.StartTime.ToString("dd/MM/yyyy")</td>
-                                                <td onclick="setActivityId(this, '@lst.pk_ActivityID');" data-toggle="modal" data-target="#modalEditActivity">@lst.TTime</td>
-                                                <td onclick="setActivityId(this, '@lst.pk_ActivityID');" data-toggle="modal" data-target="#modalEditActivity">@Convert.ToString(lst.Distance).Replace(",", ".")</td>
-                                                <td onclick="setActivityId(this, '@lst.pk_ActivityID');" data-toggle="modal" data-target="#modalEditActivity">@lst.TotalCalories</td>
-                                                <td style="cursor:pointer;" onclick="setActivityId(this, '@lst.pk_ActivityID');" data-toggle="modal" data-target="#modalDeleteActivity"><i class="fas fa-trash"></i></td>
+                                                <td  scope="row" onclick="setActivityId(this, '@lst.pk_ActivityID', '@lst.ActivityType');" data-toggle="modal" data-target="#modalEditActivity">@lst.StartTime.ToString("dd/MM/yyyy")</td>
+                                                <td onclick="setActivityId(this, '@lst.pk_ActivityID', '@lst.ActivityType');" data-toggle="modal" data-target="#modalEditActivity">@lst.TTime</td>
+                                                <td onclick="setActivityId(this, '@lst.pk_ActivityID', '@lst.ActivityType');" data-toggle="modal" data-target="#modalEditActivity">@Convert.ToString(lst.Distance).Replace(",", ".")</td>
+                                                <td onclick="setActivityId(this, '@lst.pk_ActivityID', '@lst.ActivityType');" data-toggle="modal" data-target="#modalEditActivity">@lst.TotalCalories</td>
+                                                <td style="cursor:pointer;" onclick="setActivityId(this, '@lst.pk_ActivityID', '@lst.ActivityType');" data-toggle="modal" data-target="#modalDeleteActivity"><i class="fas fa-trash"></i></td>
                                             </tr>
                                         }
                                     </tbody>
@@ -209,11 +209,11 @@
                                         @foreach (var lst in Model.TableData["Swimming"])
                                         {
                                             <tr style="cursor:pointer;" id="@lst.pk_ActivityID">
-                                                <td scope="row" onclick="setActivityId(this, '@lst.pk_ActivityID');" data-toggle="modal" data-target="#modalEditActivity">@lst.StartTime.ToString("dd/MM/yyyy")</td>
-                                                <td onclick="setActivityId(this, '@lst.pk_ActivityID');" data-toggle="modal" data-target="#modalEditActivity">@lst.TTime</td>
-                                                <td onclick="setActivityId(this, '@lst.pk_ActivityID');" data-toggle="modal" data-target="#modalEditActivity">@Convert.ToString(lst.Distance).Replace(",", ".")</td>
-                                                <td onclick="setActivityId(this, '@lst.pk_ActivityID');" data-toggle="modal" data-target="#modalEditActivity">@lst.TotalCalories</td>
-                                                <td style="cursor:pointer;" onclick="setActivityId(this, '@lst.pk_ActivityID');" data-toggle="modal" data-target="#modalDeleteActivity"><i class="fas fa-trash"></i></td>
+                                                <td scope="row" onclick="setActivityId(this, '@lst.pk_ActivityID', '@lst.ActivityType');" data-toggle="modal" data-target="#modalEditActivity">@lst.StartTime.ToString("dd/MM/yyyy")</td>
+                                                <td onclick="setActivityId(this, '@lst.pk_ActivityID', '@lst.ActivityType');" data-toggle="modal" data-target="#modalEditActivity">@lst.TTime</td>
+                                                <td onclick="setActivityId(this, '@lst.pk_ActivityID', '@lst.ActivityType');" data-toggle="modal" data-target="#modalEditActivity">@Convert.ToString(lst.Distance).Replace(",", ".")</td>
+                                                <td onclick="setActivityId(this, '@lst.pk_ActivityID', '@lst.ActivityType');" data-toggle="modal" data-target="#modalEditActivity">@lst.TotalCalories</td>
+                                                <td style="cursor:pointer;" onclick="setActivityId(this, '@lst.pk_ActivityID', '@lst.ActivityType');" data-toggle="modal" data-target="#modalDeleteActivity"><i class="fas fa-trash"></i></td>
                                             </tr>
                                         }
                                     </tbody>
@@ -246,12 +246,12 @@
                                         @foreach (var lst in Model.TableData["All"])
                                         {
                                             <tr style="cursor:pointer;" id="@lst.pk_ActivityID">
-                                                <td scope="row" onclick="setActivityId(this, '@lst.pk_ActivityID');" data-toggle="modal" data-target="#modalEditActivity">@lst.ActivityType</td>
-                                                <td onclick="setActivityId(this, '@lst.pk_ActivityID');" data-toggle="modal" data-target="#modalEditActivity">@lst.StartTime.ToString("dd/MM/yyyy")</td>
-                                                <td onclick="setActivityId(this, '@lst.pk_ActivityID');" data-toggle="modal" data-target="#modalEditActivity">@lst.TTime</td>
-                                                <td onclick="setActivityId(this, '@lst.pk_ActivityID');" data-toggle="modal" data-target="#modalEditActivity">@Convert.ToString(lst.Distance).Replace(",", ".")</td>
-                                                <td onclick="setActivityId(this, '@lst.pk_ActivityID');" data-toggle="modal" data-target="#modalEditActivity">@lst.TotalCalories</td>
-                                                <td style="cursor:pointer;" onclick="setActivityId(this, '@lst.pk_ActivityID');" data-toggle="modal" data-target="#modalDeleteActivity"><i class="fas fa-trash"></i></td>
+                                                <td scope="row" onclick="setActivityId(this, '@lst.pk_ActivityID', '@lst.ActivityType');" data-toggle="modal" data-target="#modalEditActivity">@lst.ActivityType</td>
+                                                <td onclick="setActivityId(this, '@lst.pk_ActivityID', '@lst.ActivityType');" data-toggle="modal" data-target="#modalEditActivity">@lst.StartTime.ToString("dd/MM/yyyy")</td>
+                                                <td onclick="setActivityId(this, '@lst.pk_ActivityID', '@lst.ActivityType');" data-toggle="modal" data-target="#modalEditActivity">@lst.TTime</td>
+                                                <td onclick="setActivityId(this, '@lst.pk_ActivityID', '@lst.ActivityType');" data-toggle="modal" data-target="#modalEditActivity">@Convert.ToString(lst.Distance).Replace(",", ".")</td>
+                                                <td onclick="setActivityId(this, '@lst.pk_ActivityID', '@lst.ActivityType');" data-toggle="modal" data-target="#modalEditActivity">@lst.TotalCalories</td>
+                                                <td style="cursor:pointer;" onclick="setActivityId(this, '@lst.pk_ActivityID', '@lst.ActivityType');" data-toggle="modal" data-target="#modalDeleteActivity"><i class="fas fa-trash"></i></td>
                                             </tr>
                                         }
                                     </tbody>

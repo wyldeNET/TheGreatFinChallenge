@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
+using System.Data;
 
 namespace TheGreatFinChallenge.Controllers
 {
@@ -98,6 +99,20 @@ namespace TheGreatFinChallenge.Controllers
             return x;
         }
 
+
+        private async Task<List<GroupMembership>> getAllGroupMembershipsAsync(TGFCContext ctx)
+        {
+            var x = await ctx.GroupMembership.FromSqlRaw($"SELECT GM.* " +
+                                                         $"FROM GroupMembership AS GM ").ToListAsync();
+            return x;
+        }
+
+        private async Task<List<Activities>> getAllActivitiesAsync(TGFCContext ctx)
+        {
+            var x = await ctx.Activities.FromSqlRaw($"SELECT A.* " +
+                                                    $"FROM Activities AS A ").ToListAsync();
+            return x;
+        }
 
         /*
          * Function that returns an userObject of the SQL DB with a given context and id.
@@ -534,6 +549,7 @@ namespace TheGreatFinChallenge.Controllers
             var fileName = $"{Convert.ToString(photo.PhotoID)}{extention}";
             string path = Path.Combine(webRootPath, "img\\uploadedImages", fileName);
 
+
             FileInfo file = new FileInfo(path);
             if (file.Exists)
             {
@@ -548,6 +564,79 @@ namespace TheGreatFinChallenge.Controllers
             }
 
             return Redirect("~/Account/Photos");
+        }
+
+
+        // POST: /Backup
+        [HttpPost("Backup")]
+        public async Task<ActionResult> GetBackupFile()
+        {
+            string webRootPath = _environment.ContentRootPath;
+            string date = DateTime.Now.ToString("dd_MM_yyyy");
+            string fileName = String.Format("Backup_{0}.txt", date);
+            string path = Path.Combine(webRootPath, "BackupTXT\\", fileName);
+
+            if (System.IO.File.Exists(path))
+            {
+                System.IO.File.Delete(path);
+            }
+
+
+            var data = "USE TheGreatFinChallenge\nGO\n\n";
+
+            //Users
+            data += "INSERT INTO Users (FirstName, LastName, [Admin], Email, PasswordHash, [Hash], CreationDate)\nVALUES\n";
+            List< Users > users = await getAllUsersByIdAsync(_context);
+            foreach (var u in users)
+            {
+                var line = $"('{u.FirstName}', '{u.LastName}', {u.Admin},'{u.Email}', '{u.PasswordHash}', '{u.Hash}', '{u.CreationDate}')";
+                if (u == users.Last()) line += ";\n\n";
+                else line += ",\n";
+                data += line;
+            }
+
+
+            //Groups
+            data += "INSERT INTO Groups (fk_CreatorID, GroupName)\nVALUES\n";
+            List<Groups> groups = await getAllGroupsAsync(_context);
+            foreach (var g in groups)
+            {
+                var line = $"({g.fk_CreatorID}, '{g.GroupName}')";
+                if (g == groups.Last()) line += ";\n\n";
+                else line += ",\n";
+                data += line;
+            }
+
+
+            //GroupMemberships
+            data += "INSERT INTO GroupMembership(UserID, GroupID)\nVALUES\n";
+            List<GroupMembership> groupmemberships = await getAllGroupMembershipsAsync(_context);
+            foreach (var gm in groupmemberships)
+            {
+                var line = $"({gm.UserID}, {gm.GroupID})";
+                if (gm == groupmemberships.Last()) line += ";\n\n";
+                else line += ",\n";
+                data += line;
+            }
+
+
+            //Activities
+            data += "INSERT INTO Activities (fk_UserID, ActivityType, TotalCalories, Distance, TTime, StartTime, Gear)\nVALUES\n";
+            List<Activities> activities = await getAllActivitiesAsync(_context);
+            foreach (var a in activities)
+            {
+                var line = $"({a.fk_UserID}, '{a.ActivityType}', {a.TotalCalories}, {a.Distance}, {a.TTime}, {a.StartTime}, '{a.Gear}')";
+                if (a == activities.Last()) line += ";";
+                else line += ",\n";
+                data += line;
+            }
+
+            using (StreamWriter outputFile = new StreamWriter(path))
+            {
+                await outputFile.WriteAsync(data);
+            }
+
+            return PhysicalFile(path, "application/octet-stream", fileName);
         }
     }
 }

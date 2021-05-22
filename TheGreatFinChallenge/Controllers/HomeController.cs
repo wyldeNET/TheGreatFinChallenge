@@ -45,13 +45,13 @@ namespace TheGreatFinChallenge.Controllers
 
         private bool HasSpecialChars(string testString)
         {
-            return testString.Any(c => !Char.IsLetterOrDigit(c));
+            return testString.Any(char.IsDigit);
         }
 
 
         private bool HasDigit(string testString)
         {
-            return testString.Any(char.IsDigit);
+            return testString.Any(c => char.IsDigit(c));
         }
 
 
@@ -85,12 +85,17 @@ namespace TheGreatFinChallenge.Controllers
             if (nonHashedPassword != confirm_nonHashedPassword)
             {
                 TempData["PasswordError"] = "Password's don't match.";
-                return View("Register");
+                var allGroups = await getAllGroupsAsync(_context);
+                RegisterData data = new RegisterData(allGroups);
+                return View("Register", data);
             }
 
-            if (!HasDigit(nonHashedPassword) || !HasSpecialChars(nonHashedPassword))
+            if (!HasDigit(nonHashedPassword) || !HasSpecialChars(nonHashedPassword) || nonHashedPassword.Length < 8)
             {
                 TempData["PasswordReqError"] = "Make sure that the password meets the requirements.";
+                var allGroups = await getAllGroupsAsync(_context);
+                RegisterData data = new RegisterData(allGroups);
+                return View("Register", data);
                 return View("Register");
             }
 
@@ -98,6 +103,9 @@ namespace TheGreatFinChallenge.Controllers
             if (UserList.Count != 0)
             {
                 TempData["EmailError"] = "Email is already in use. Try to login instead.";
+                var allGroups = await getAllGroupsAsync(_context);
+                RegisterData data = new RegisterData(allGroups);
+                return View("Register", data);
                 return View("Register");
             }
 

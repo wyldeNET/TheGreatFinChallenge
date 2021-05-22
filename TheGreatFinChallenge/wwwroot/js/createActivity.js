@@ -104,6 +104,16 @@ function calculateCalories() {
     if (document.getElementById("hiking").checked) typeActivity = "Hiking"
     if (document.getElementById("swimming").checked) typeActivity = "Swimming"
 
+    if (typeActivity == "Cycling" && $("#checkboxGroup").hasClass("d-none")) {
+        $("#checkboxGroup").removeClass("d-none")
+    } else if (typeActivity != "Cycling") {
+        $("#checkboxGroup").addClass("d-none")
+        document.getElementById("checkbox").checked = false;
+    }
+
+    checkbox = false;
+    checkbox = $("#checkbox").is(":checked");
+
     var time = document.getElementById("totalTime").value.split(":")
     var hours = (time[0] == "NaN" || time[0] == undefined) ? "0" : time[0];
     var minutes = (time[1] == "NaN" || time[1] == undefined) ? "0" : time[1];
@@ -112,7 +122,8 @@ function calculateCalories() {
     var timeInMinutes = (parseInt(hours) * 60) + parseInt(minutes) + (parseInt(seconds) / 60)
 
 
-    if (typeActivity == "Cycling") MET = 8;
+    if (typeActivity == "Cycling" && !checkbox) MET = 8;
+    else if (typeActivity == "Cycling" && checkbox) MET = 4;
     else if (typeActivity == "Running") MET = 9;
     else if (typeActivity == "Hiking") MET = 3;
     else MET = 6;
