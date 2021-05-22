@@ -18,8 +18,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="BackupTXT\" />
+    <Folder Include="wwwroot\BackupTXT\" />
     <Folder Include="wwwroot\img\uploadedImages\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\BackupTXT\Backup_21_05_2021.txt" />
   </ItemGroup>
 
 </Project>

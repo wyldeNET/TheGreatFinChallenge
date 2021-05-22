@@ -571,72 +571,85 @@ namespace TheGreatFinChallenge.Controllers
         [HttpPost("Backup")]
         public async Task<ActionResult> GetBackupFile()
         {
-            string webRootPath = _environment.ContentRootPath;
-            string date = DateTime.Now.ToString("dd_MM_yyyy");
-            string fileName = String.Format("Backup_{0}.txt", date);
-            string path = Path.Combine(webRootPath, "BackupTXT\\", fileName);
+            setUserDictionairy();
+            var id = Convert.ToInt32(UserDictionairy["UserID"]);
+            var user = await getUserByIdAsync(_context, id);
 
-            if (System.IO.File.Exists(path))
+            if (user.Admin)
             {
-                System.IO.File.Delete(path);
-            }
+                string webRootPath = _environment.WebRootPath;
+                string date = DateTime.Now.ToString("dd_MM_yyyy");
+                string fileName = String.Format("Backup_{0}.txt", date);
+                string path = Path.Combine(webRootPath, "BackupTXT\\", fileName);
+
+                if (System.IO.File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+                }
 
 
-            var data = "USE TheGreatFinChallenge\nGO\n\n";
+                var data = "USE TheGreatFinChallenge\nGO\n\n";
 
-            //Users
-            data += "INSERT INTO Users (FirstName, LastName, [Admin], Email, PasswordHash, [Hash], CreationDate)\nVALUES\n";
-            List< Users > users = await getAllUsersByIdAsync(_context);
-            foreach (var u in users)
+                //Users
+                data += "INSERT INTO Users (FirstName, LastName, [Admin], Email, PasswordHash, [Hash], CreationDate)\nVALUES\n";
+                List<Users> users = await getAllUsersByIdAsync(_context);
+                foreach (var u in users)
+                {
+                    var line = $"('{u.FirstName}', '{u.LastName}', {u.Admin},'{u.Email}', '{u.PasswordHash}', '{u.Hash}', '{u.CreationDate}')";
+                    if (u == users.Last()) line += ";\n\n";
+                    else line += ",\n";
+                    data += line;
+                }
+
+
+                //Groups
+                data += "INSERT INTO Groups (fk_CreatorID, GroupName)\nVALUES\n";
+                List<Groups> groups = await getAllGroupsAsync(_context);
+                foreach (var g in groups)
+                {
+                    var line = $"({g.fk_CreatorID}, '{g.GroupName}')";
+                    if (g == groups.Last()) line += ";\n\n";
+                    else line += ",\n";
+                    data += line;
+                }
+
+
+                //GroupMemberships
+                data += "INSERT INTO GroupMembership(UserID, GroupID)\nVALUES\n";
+                List<GroupMembership> groupmemberships = await getAllGroupMembershipsAsync(_context);
+                foreach (var gm in groupmemberships)
+                {
+                    var line = $"({gm.UserID}, {gm.GroupID})";
+                    if (gm == groupmemberships.Last()) line += ";\n\n";
+                    else line += ",\n";
+                    data += line;
+                }
+
+
+                //Activities
+                data += "INSERT INTO Activities (fk_UserID, ActivityType, TotalCalories, Distance, TTime, StartTime, Gear)\nVALUES\n";
+                List<Activities> activities = await getAllActivitiesAsync(_context);
+                foreach (var a in activities)
+                {
+                    var line = $"({a.fk_UserID}, '{a.ActivityType}', {a.TotalCalories}, {a.Distance}, {a.TTime}, {a.StartTime}, '{a.Gear}')";
+                    if (a == activities.Last()) line += ";";
+                    else line += ",\n";
+                    data += line;
+                }
+
+                using (StreamWriter outputFile = new StreamWriter(path))
+                {
+                    await outputFile.WriteAsync(data);
+                }
+
+                return PhysicalFile(path, "application/octet-stream", fileName);
+            } 
+            else
             {
-                var line = $"('{u.FirstName}', '{u.LastName}', {u.Admin},'{u.Email}', '{u.PasswordHash}', '{u.Hash}', '{u.CreationDate}')";
-                if (u == users.Last()) line += ";\n\n";
-                else line += ",\n";
-                data += line;
+                TempData["Error"] = "You don't have the permissions to do this. Please contact an administrator.";
+                return Redirect("~/Account/Settings");
             }
-
-
-            //Groups
-            data += "INSERT INTO Groups (fk_CreatorID, GroupName)\nVALUES\n";
-            List<Groups> groups = await getAllGroupsAsync(_context);
-            foreach (var g in groups)
-            {
-                var line = $"({g.fk_CreatorID}, '{g.GroupName}')";
-                if (g == groups.Last()) line += ";\n\n";
-                else line += ",\n";
-                data += line;
-            }
-
-
-            //GroupMemberships
-            data += "INSERT INTO GroupMembership(UserID, GroupID)\nVALUES\n";
-            List<GroupMembership> groupmemberships = await getAllGroupMembershipsAsync(_context);
-            foreach (var gm in groupmemberships)
-            {
-                var line = $"({gm.UserID}, {gm.GroupID})";
-                if (gm == groupmemberships.Last()) line += ";\n\n";
-                else line += ",\n";
-                data += line;
-            }
-
-
-            //Activities
-            data += "INSERT INTO Activities (fk_UserID, ActivityType, TotalCalories, Distance, TTime, StartTime, Gear)\nVALUES\n";
-            List<Activities> activities = await getAllActivitiesAsync(_context);
-            foreach (var a in activities)
-            {
-                var line = $"({a.fk_UserID}, '{a.ActivityType}', {a.TotalCalories}, {a.Distance}, {a.TTime}, {a.StartTime}, '{a.Gear}')";
-                if (a == activities.Last()) line += ";";
-                else line += ",\n";
-                data += line;
-            }
-
-            using (StreamWriter outputFile = new StreamWriter(path))
-            {
-                await outputFile.WriteAsync(data);
-            }
-
-            return PhysicalFile(path, "application/octet-stream", fileName);
+            
         }
     }
 }
