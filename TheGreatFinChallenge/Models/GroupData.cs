@@ -93,9 +93,7 @@ namespace TheGreatFinChallenge.Models
                         var prev = lst[day];
                         if (property == "Activities" || activity.ActivityType == property) lst[day] = prev + 1;
                         if (property == "Calories") lst[day] = prev + activity.TotalCalories;
-                        if (property == "Distance") lst[day] = prev + Convert.ToInt32(activity.Distance);
-
-                        
+                        if (property == "Distance") lst[day] = prev + Convert.ToInt32(activity.Distance); 
                     }
                 tempDictionary[property] = lst;
                 }
@@ -128,15 +126,18 @@ namespace TheGreatFinChallenge.Models
                             if (property == "Distance") lst[day] = prev + Convert.ToInt32(activity.Distance);
                         }
 
-                        var newLst = new List<int>();
-                        var count = 0;
-                        foreach (var i in lst)
+                        if (property == "Calories")
                         {
-                            count += i;
-                            newLst.Add(count / userCount);
+                            var newLst = new List<int>();
+                            var count = 0;
+                            foreach (var i in lst)
+                            {
+                                count += i;
+                                newLst.Add(count / userCount);
+                            }
+                            dict[group.GroupName] = newLst;
                         }
-
-                        dict[group.GroupName] = newLst;
+                        else dict[group.GroupName] = lst;
                     }
                 }
                 tempDictBeforeReturn[property] = dict;

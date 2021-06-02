@@ -589,17 +589,20 @@ namespace TheGreatFinChallenge.Controllers
 
 
                 var data = "USE TheGreatFinChallenge\nGO\n\n";
-
                 //Users
-                data += "INSERT INTO Users (FirstName, LastName, [Admin], Email, PasswordHash, [Hash], CreationDate)\nVALUES\n";
+                data += "SET IDENTITY_INSERT Users ON\n";
+                data += "GO\n";
+                data += "INSERT INTO Users (pk_UserID, FirstName, LastName, [Admin], Email, PasswordHash, [Hash], CreationDate)\nVALUES\n";
                 List<Users> users = await getAllUsersByIdAsync(_context);
                 foreach (var u in users)
                 {
-                    var line = $"('{u.FirstName}', '{u.LastName}', {Convert.ToInt32(u.Admin)},'{u.Email}', '{u.PasswordHash}', '{u.Hash}', '{u.CreationDate}')";
-                    if (u == users.Last()) line += ";\n\n";
+                    var line = $"({u.pk_UserID}, '{u.FirstName}', '{u.LastName}', {Convert.ToInt32(u.Admin)},'{u.Email}', '{u.PasswordHash}', '{u.Hash}', '{u.CreationDate.ToString("yyyy-MM-dd")}')";
+                    if (u == users.Last()) line += ";\n";
                     else line += ",\n";
                     data += line;
                 }
+                data += "SET IDENTITY_INSERT Users ON\n";
+                data += "GO\n\n";
 
 
                 //Groups
@@ -631,7 +634,7 @@ namespace TheGreatFinChallenge.Controllers
                 List<Activities> activities = await getAllActivitiesAsync(_context);
                 foreach (var a in activities)
                 {
-                    var line = $"({a.fk_UserID}, '{a.ActivityType}', {a.TotalCalories}, {Convert.ToString(a.Distance).Replace(",", ".")}, {a.TTime}, {a.StartTime}, '{a.Gear}')";
+                    var line = $"({a.fk_UserID}, '{a.ActivityType}', {a.TotalCalories}, {Convert.ToString(a.Distance).Replace(",", ".")}, '{a.TTime}', '{a.StartTime.ToString("yyyy-MM-dd HH:mm:ss")}', '{a.Gear}')";
                     if (a == activities.Last()) line += ";";
                     else line += ",\n";
                     data += line;

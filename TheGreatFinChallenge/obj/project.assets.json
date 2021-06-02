@@ -7574,28 +7574,20 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ThibautD\\.nuget\\packages\\": {},
-    "D:\\VS\\Shared\\NuGetPackages": {},
-    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
+    "C:\\Users\\thiba\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ThibautD\\source\\repos\\TheGreatFinChallenge\\TheGreatFinChallenge\\TheGreatFinChallenge.csproj",
+      "projectUniqueName": "C:\\Users\\thiba\\Documents\\Thibaut\\TheGreatFinChallenge-main\\TheGreatFinChallenge\\TheGreatFinChallenge.csproj",
       "projectName": "TheGreatFinChallenge",
-      "projectPath": "C:\\Users\\ThibautD\\source\\repos\\TheGreatFinChallenge\\TheGreatFinChallenge\\TheGreatFinChallenge.csproj",
-      "packagesPath": "C:\\Users\\ThibautD\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ThibautD\\source\\repos\\TheGreatFinChallenge\\TheGreatFinChallenge\\obj\\",
+      "projectPath": "C:\\Users\\thiba\\Documents\\Thibaut\\TheGreatFinChallenge-main\\TheGreatFinChallenge\\TheGreatFinChallenge.csproj",
+      "packagesPath": "C:\\Users\\thiba\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\thiba\\Documents\\Thibaut\\TheGreatFinChallenge-main\\TheGreatFinChallenge\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "D:\\VS\\Shared\\NuGetPackages",
-        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-      ],
       "configFilePaths": [
-        "C:\\Users\\ThibautD\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Users\\thiba\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
@@ -7661,7 +7653,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.203\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.300\\RuntimeIdentifierGraph.json"
       }
     }
   }
